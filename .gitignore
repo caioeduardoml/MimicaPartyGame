@@ -1,0 +1,52 @@
+# =============================================================================
+# .gitignore - Mimica Party Game (Flutter / Android)
+# =============================================================================
+
+# Arquivos temporarios e de sistema operacional
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~
+
+# Arquivos e pastas de IDEs (VS Code, Android Studio, IntelliJ)
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+
+# Pastas de compilacao e cache do Dart / Flutter
+.dart_tool/
+.packages
+.pub-cache/
+.pub/
+build/
+flutter_export_environment.sh
+.flutter-plugins
+.flutter-plugins-dependencies
+GeneratedPluginRegistrant.java
+
+# Relatorios de cobertura e logs
+coverage/
+*.log
+app.*.symbols
+app.*.map.json
+
+# Arquivos especificos e sensiveis do Android / Gradle
+/android/.gradle/
+/android/captures/
+/android/local.properties
+/android/key.properties
+*.jks
+*.keystore
+
+# Artefatos auxiliares da compilacao LaTeX (mantem apenas o .tex e eventual .pdf)
+*.aux
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.out
+*.synctex.gz
+*.toc

@@ -1,0 +1,375 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============================================================================
+% PACOTES ESSENCIAIS (Padrao LaTeX em Portugues / UTF-8)
+% ============================================================================
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[brazil]{babel}
+\usepackage{geometry}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+
+% Configuracao das margens da pagina A4
+\geometry{
+  left=2.5cm,
+  right=2.5cm,
+  top=2.5cm,
+  bottom=2.5cm,
+  headheight=15pt
+}
+
+% Paleta de cores inspirada no tema do app
+\definecolor{PrimaryPurple}{HTML}{512DA8}
+\definecolor{AccentAmber}{HTML}{E65100}
+\definecolor{CodeBackground}{HTML}{F5F6FA}
+\definecolor{CodeBorder}{HTML}{DCDDE1}
+\definecolor{DarkText}{HTML}{2F3640}
+\definecolor{SuccessGreen}{HTML}{1B5E20}
+
+% Configuracao de links clicaveis no PDF
+\hypersetup{
+  colorlinks=true,
+  linkcolor=PrimaryPurple,
+  urlcolor=PrimaryPurple,
+  pdftitle={Documentacao Completa - Mimica Party Game},
+  pdfauthor={Arquitetura Mobile Flutter}
+}
+
+% Estilo de cabecalho e rodape
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\textbf{Mímica Party Game} — Documentação Oficial}
+\fancyhead[R]{Android / Flutter}
+\fancyfoot[C]{\thepage}
+
+% Estilo dos titulos de secao
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{PrimaryPurple}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{DarkText}}{\thesubsection}{1em}{}
+
+% Configuracao de blocos de codigo (listings) com suporte a acentos em Portugues
+\lstset{
+  backgroundcolor=\color{CodeBackground},
+  basicstyle=\ttfamily\small,
+  breakatwhitespace=false,
+  breaklines=true,
+  captionpos=b,
+  commentstyle=\color{SuccessGreen}\itshape,
+  frame=single,
+  rulecolor=\color{CodeBorder},
+  keepspaces=true,
+  keywordstyle=\color{PrimaryPurple}\bfseries,
+  numbers=none,
+  showspaces=false,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  literate=
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {à}{{\`a}}1 {è}{{\`e}}1 {ì}{{\`i}}1 {ò}{{\`o}}1 {ù}{{\`u}}1
+    {À}{{\`A}}1 {È}{{\'E}}1 {Ì}{{\`I}}1 {Ò}{{\`O}}1 {Ù}{{\`U}}1
+    {ä}{{\"a}}1 {ë}{{\"e}}1 {ï}{{\"i}}1 {ö}{{\"o}}1 {ü}{{\"u}}1
+    {Ä}{{\"A}}1 {Ë}{{\"E}}1 {Ï}{{\"I}}1 {Ö}{{\"O}}1 {Ü}{{\"U}}1
+    {â}{{\^a}}1 {ê}{{\^e}}1 {î}{{\^i}}1 {ô}{{\^o}}1 {û}{{\^u}}1
+    {Â}{{\^A}}1 {Ê}{{\^E}}1 {Î}{{\^I}}1 {Ô}{{\^O}}1 {Û}{{\^U}}1
+    {ã}{{\~a}}1 {õ}{{\~o}}1 {Ã}{{\~A}}1 {Õ}{{\~O}}1
+    {ç}{{\c c}}1 {Ç}{{\c C}}1
+}
+
+% ============================================================================
+% INICIO DO DOCUMENTO
+% ============================================================================
+\begin{document}
+
+% Capa / Titulo
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+  {\Huge\bfseries\color{PrimaryPurple} MÍMICA PARTY GAME\par}
+  \vspace{0.4cm}
+  {\Large\bfseries Guia Completo de Arquitetura, Funcionamento e Manutenção\par}
+  \vspace{1.5cm}
+  \rule{\linewidth}{0.5mm} \\[0.4cm]
+  {\large Documentação intuitiva projetada para iniciantes e desenvolvedores.\\
+  Explicação detalhada de todas as pastas, arquivos, regras de negócio e guia passo a passo para futuras modificações.\par}
+  \rule{\linewidth}{0.5mm} \\[2cm]
+
+  \begin{tabular}{ll}
+    \textbf{Plataforma Alvo:} & Android (APK Ultraleve com R8/ProGuard) \\
+    \textbf{Tecnologia:} & Flutter \& Dart (Null Safety) \\
+    \textbf{Arquitetura:} & Feature-First Clean Architecture \\
+    \textbf{Gerência de Estado:} & Riverpod (\texttt{Notifier}) + Freezed \\
+    \textbf{Banco de Dados:} & JSON Local Offline (\texttt{assets/data/words\_db.json}) \\
+  \end{tabular}
+
+  \vfill
+  {\large \today\par}
+\end{titlepage}
+
+\tableofcontents
+\newpage
+
+% ============================================================================
+% SECAO 1: VISAO GERAL E ANALOGIA
+% ============================================================================
+\section{Visão Geral: Como o Aplicativo Funciona?}
+
+Mesmo que você nunca tenha programado antes, entender a estrutura deste aplicativo é muito simples. Imagine que o \textbf{Mímica Party Game} funciona exatamente como um \textbf{Restaurante Bem Organizado}:
+
+\begin{enumerate}[label=\textbf{\arabic*.}]
+  \item \textbf{O Salão e o Cardápio (\texttt{presentation/pages}):} É tudo aquilo que os jogadores veem e tocam na tela do celular (botões, placar colorido, cronômetro gigante).
+  \item \textbf{O Gerente do Salão (\texttt{presentation/state}):} É o cérebro que controla o andamento da partida. Ele sabe de qual equipe é a vez, quantos segundos faltam no relógio, soma os pontos e avisa imediatamente quando alguém vence.
+  \item \textbf{As Regras da Casa (\texttt{domain}):} Define o que é uma Equipe, o que é uma Carta de Mímica e quais são as regras oficiais (por exemplo: nível Fácil vale 1 ponto; nível Bônus vale 4 pontos, mas perde 2 se errar).
+  \item \textbf{A Despensa de Ingredientes (\texttt{data} e \texttt{assets}):} É onde ficam guardadas todas as palavras e penalidades físicas do jogo em um arquivo de texto estruturado (\texttt{words\_db.json}), funcionando 100\% sem internet.
+\end{enumerate}
+
+Essa divisão inteligente é chamada no mercado de tecnologia de \textbf{Clean Architecture (Arquitetura Limpa)}. O maior benefício dela é a segurança: você pode mudar completamente as cores de uma tela sem correr o risco de estragar a matemática dos pontos, ou adicionar 500 palavras novas sem precisar tocar em nenhuma linha de código das telas.
+
+% ============================================================================
+% SECAO 2: REGRAS DO JOGO
+% ============================================================================
+\section{Regras de Negócio e Dinâmica da Partida}
+
+O jogo foi construído seguindo fielmente as seguintes regras:
+
+\begin{itemize}
+  \item \textbf{Equipes:} Suporta de \textbf{2 a 6 equipes}. Cada equipe pode ter de \textbf{2 a 6 jogadores}, e o usuário pode personalizar os nomes antes de começar.
+  \item \textbf{Configuração da Partida:} Antes do início, escolhe-se a \textbf{Pontuação Máxima} para vencer (através de um controle deslizante de \textbf{20 a 60 pontos}) e quais categorias estarão ativas na partida.
+  \item \textbf{Sorteio de Categorias:} No turno de cada equipe, o aplicativo sorteia e exibe \textbf{4 opções de categorias} dentre as 11 disponíveis (\textit{Ações, Objetos, Lugares, Animais, Verbos, Filmes, Heróis, Profissões, Esportes, Comidas e Difícil/Aleatório}). A equipe da vez escolhe \textbf{UMA}.
+  \item \textbf{Níveis de Risco e Pontuação:}
+    \begin{itemize}
+      \item \textbf{Fácil (+1 Ponto):} Uma palavra simples (ex: \textit{``Faca''}). Se errar: 0 pontos.
+      \item \textbf{Normal (+2 Pontos):} Uma palavra mais específica (ex: \textit{``Copo de plástico''}). Se errar: 0 pontos.
+      \item \textbf{Difícil (+3 Pontos):} Duas palavras fáceis combinadas para fazer mímica junto (ex: \textit{``Pano de chão e Celular''}). Se errar: 0 pontos.
+      \item \textbf{Bônus (+4 Pontos / Penalidade de -2 Pontos):} Uma palavra Normal acompanhada de uma restrição física obrigatória (ex: \textit{``Sem usar as mãos''}, \textit{``De costas para a equipe''}). \textbf{Regra Especial:} Se a equipe errar no modo Bônus, ela \textbf{perde 2 pontos}.
+    \end{itemize}
+  \item \textbf{Temporizador Duplo:} Ao escolher o nível de risco, inicia-se uma contagem regressiva de \textbf{5 segundos de preparação} (com a palavra já visível na tela para o mímico ler). Em seguida, dispara automaticamente o cronômetro principal de \textbf{70 segundos}, contando com botão de \textbf{Pausar/Retomar} e alerta vibratório/sonoro ao final.
+  \item \textbf{Condição de Vitória Imediata:} Não há equilíbrio de turnos. A primeira equipe que atingir ou ultrapassar a pontuação máxima estipulada \textbf{vence imediatamente}, e o aplicativo corta direto para a Tela de Vitória com o pódio.
+\end{itemize}
+
+% ============================================================================
+% SECAO 3: MAPA DAS PASTAS E ARQUIVOS
+% ============================================================================
+\section{Mapa das Pastas e Arquivos do Projeto}
+
+Abaixo está a estrutura completa de diretórios do projeto \texttt{teste/}:
+
+\begin{lstlisting}
+teste/
+|-- android/                  # Configuracoes do sistema Android e R8/ProGuard
+|-- assets/                   # Arquivos internos de dados e sons
+|   |-- audio/                # Pasta para efeitos sonoros (.mp3)
+|   +-- data/
+|       +-- words_db.json     # Banco de dados com +360 palavras e penalidades
+|-- lib/                      # Codigo-fonte principal em Flutter/Dart
+|   |-- core/                 # Recursos compartilhados pelo app inteiro
+|   |   |-- services/
+|   |   |   +-- feedback_service.dart  # Vibracao (Haptics) e Sons
+|   |   +-- theme/
+|   |       +-- app_theme.dart         # Cores e estilos visuais dos botoes
+|   |-- features/
+|   |   +-- mimica/           # Modulo completo do Jogo de Mimica
+|   |       |-- domain/       # CAMADA 1: Entidades e Regras de Negocio
+|   |       |-- data/         # CAMADA 2: Leitura do JSON e Sorteio de Cartas
+|   |       +-- presentation/ # CAMADA 3: Motor de Estado e as 7 Telas
+|   +-- main.dart             # Ponto de entrada que inicializa o aplicativo
++-- pubspec.yaml              # Declaracao de pacotes e assets do projeto
+\end{lstlisting}
+
+\subsection{Explicação Detalhada de Cada Pasta e Arquivo}
+
+\subsubsection{1. Raiz e Núcleo (\texttt{lib/} e \texttt{lib/core/})}
+\begin{itemize}
+  \item \textbf{\texttt{lib/main.dart}:} É a ``chave de ignição'' do aplicativo. Quando o usuário toca no ícone do jogo no Android, este arquivo é executado primeiro, bloqueando o giro da tela (mantendo sempre em modo retrato vertical) e carregando o tema visual.
+  \item \textbf{\texttt{lib/core/theme/app\_theme.dart}:} Centraliza todas as cores e fontes do aplicativo (fundo escuro noturno, roxo vibrante, amarelo ouro, verde de acerto e vermelho de erro).
+  \item \textbf{\texttt{lib/core/services/feedback\_service.dart}:} Controla a vibração física do aparelho Android nos segundos finais do relógio, no início da mímica, no esgotamento do tempo e na tela de vitória, além de tocar os sons correspondentes.
+\end{itemize}
+
+\subsubsection{2. Camada \texttt{domain} (As Regras Puras)}
+Localizada em \texttt{lib/features/mimica/domain/}:
+\begin{itemize}
+  \item \textbf{\texttt{entities/game\_enums.dart}:} Define as listas fixas do sistema:
+    \begin{itemize}
+      \item \texttt{GameCategory}: As 11 categorias do jogo.
+      \item \texttt{RiskLevel}: Os 4 níveis de risco (\texttt{easy}, \texttt{normal}, \texttt{hard}, \texttt{bonus}) com suas respectivas pontuações de acerto e erro.
+      \item \texttt{GamePhase}: As etapas da máquina de estados que controlam qual tela é exibida em cada momento.
+    \end{itemize}
+  \item \textbf{\texttt{entities/team\_entity.dart}:} Representa uma Equipe (identificador único, nome, número de jogadores entre 2 e 6, e pontuação acumulada).
+  \item \textbf{\texttt{entities/mimic\_card\_entity.dart}:} Representa a Carta de Mímica sorteada (palavra principal, segunda palavra opcional para o nível Difícil e penalidade física opcional para o nível Bônus).
+  \item \textbf{\texttt{repositories/word\_repository.dart}:} Contrato abstrato que determina como o sorteador de cartas deve se comportar.
+  \item \textit{Observação sobre arquivos \texttt{.freezed.dart} e \texttt{.g.dart}:} São arquivos gerados automaticamente pela ferramenta \texttt{build\_runner} para garantir que os dados sejam imutáveis e seguros. Você nunca precisa editá-los manualmente.
+\end{itemize}
+
+\subsubsection{3. Camada \texttt{data} (O Banco de Palavras e Sorteador)}
+Localizada em \texttt{lib/features/mimica/data/}:
+\begin{itemize}
+  \item \textbf{\texttt{models/words\_database\_model.dart}} e \textbf{\texttt{datasources/local\_word\_datasource.dart}:} Carregam o arquivo \texttt{assets/data/words\_db.json} uma única vez para a memória RAM do celular, garantindo que o sorteio de cartas ocorra instantaneamente e sem travamentos.
+  \item \textbf{\texttt{repositories/word\_repository\_impl.dart}:} É o ``Crupiê'' (sorteador inteligente) do jogo. Ele verifica quais palavras já saíram na partida atual (\texttt{usedCardIds}) para não repeti-las, combina duas palavras fáceis quando o jogador pede o nível \textbf{Difícil} e anexa uma penalidade física quando o jogador pede o nível \textbf{Bônus}.
+\end{itemize}
+
+\subsubsection{4. Camada \texttt{presentation} (O Motor do Jogo e as 7 Telas)}
+Localizada em \texttt{lib/features/mimica/presentation/}:
+\begin{itemize}
+  \item \textbf{\texttt{state/game\_state.dart}:} Guarda o estado completo do jogo em um único objeto imutável (lista de equipes, equipe da vez, meta de pontos, categorias sorteadas, carta atual e segundos restantes no timer).
+  \item \textbf{\texttt{state/game\_notifier.dart}:} É o \textbf{Motor Principal do Jogo}. Contém todas as funções que alteram o estado: adicionar/remover equipes, sortear categorias, iniciar o cronômetro de 5 segundos seguido pelo de 70 segundos, pausar o tempo, computar pontos e verificar se alguém atingiu a pontuação de vitória.
+  \item \textbf{\texttt{pages/game\_flow\_shell\_page.dart}:} Ouve a fase atual (\texttt{GamePhase}) e faz a transição animada entre as \textbf{7 telas do aplicativo}:
+    \begin{enumerate}
+      \item \textbf{\texttt{home\_page.dart} (Home):} Tela inicial com botão ``Jogar Agora'' e modal explicativo de ``Regras e Configurações''.
+      \item \textbf{\texttt{setup\_page.dart} (Setup):} Configuração do slider de pontos (20 a 60), cadastro de equipes (2 a 6 equipes) e seleção de categorias ativas (mínimo 4).
+      \item \textbf{\texttt{scoreboard\_page.dart} (Placar):} Exibe a pontuação de todas as equipes com barra de progresso, destaca de quem é a vez e apresenta o botão ``Iniciar Turno''.
+      \item \textbf{\texttt{category\_selection\_page.dart} (Seleção de Categoria):} Grade 2x2 com as 4 categorias sorteadas no turno.
+      \item \textbf{\texttt{risk\_selection\_page.dart} (Seleção de Risco):} Botões para escolher Fácil (+1), Normal (+2), Difícil (+3) ou Bônus (+4 / Erro -2).
+      \item \textbf{\texttt{action\_page.dart} (Tela de Ação):} Mostra a(s) palavra(s), o alerta de penalidade física (no Bônus), o Cronômetro Gigante (5s $\rightarrow$ 70s), botão de Pausar/Retomar e, ao final do tempo, os botões ``Errou'' e ``Acertou''.
+      \item \textbf{\texttt{victory\_page.dart} (Tela de Vitória):} Exibe o troféu para a equipe vencedora, a classificação geral e o botão ``Jogar Novamente''.
+    \end{enumerate}
+\end{itemize}
+
+\newpage
+% ============================================================================
+% SECAO 4: FLUXO VISUAL DA PARTIDA
+% ============================================================================
+\section{Fluxo Passo a Passo de uma Partida}
+
+O diagrama abaixo representa o ciclo de funcionamento do aplicativo do início ao fim:
+
+\begin{lstlisting}
+[1. TELA HOME]
+   | (Toque em "Jogar Agora")
+   v
+[2. TELA DE SETUP] --> Define Meta (20-60 pts), Equipes (2-6) e Categorias
+   | (Toque em "Começar Partida")
+   v
+[3. PLACAR (SCOREBOARD)] <--------------------------------------------+
+   | (Toque em "Iniciar Turno")                                       |
+   v                                                                  |
+[4. SELECAO DE CATEGORIA] --> App sorteia 4 opcoes; Equipe escolhe 1  |
+   |                                                                  |
+   v                                                                  |
+[5. NIVEL DE RISCO] --> Escolha: Facil, Normal, Dificil ou Bonus      |
+   |                                                                  |
+   v                                                                  |
+[6. TELA DE ACAO E CRONOMETRO]                                        |
+   |--> 5 segundos de Preparacao (Palavra ja visivel na tela)         |
+   |--> 70 segundos de Mimica (Com botao Pausar / Encerrar antes)     |
+   +--> Fim do Tempo: Exibe botoes "ACERTOU" e "ERROU"                |
+          |                                                           |
+          +--> Se a equipe AINDA NAO atingiu a meta de pontos --------+
+          |    (Passa a vez para a proxima equipe e volta ao Placar)
+          |
+          +--> Se a equipe ATINGIU ou ULTRAPASSOU a meta de pontos:
+                 v
+          [7. TELA DE VITORIA IMEDIATA!] (Podio + Jogar Novamente)
+\end{lstlisting}
+
+% ============================================================================
+% SECAO 5: GUIA DE MODIFICACOES E MELHORIAS
+% ============================================================================
+\section{Guia Prático: Como Fazer Modificações e Melhorias}
+
+Esta seção ensina passo a passo como personalizar o jogo mesmo sem ter experiência avançada em programação.
+
+\subsection{1. Como Adicionar ou Alterar Palavras e Penalidades Físicas}
+Você \textbf{não precisa alterar nenhum arquivo de código} para adicionar novas palavras:
+\begin{enumerate}
+  \item Abra o arquivo \texttt{assets/data/words\_db.json} em qualquer editor de texto.
+  \item Na seção \texttt{"penalties"}, adicione novas frases entre aspas para o modo Bônus:
+\begin{lstlisting}
+"penalties": [
+  "Sem usar as mãos",
+  "De costas para a equipe",
+  "Fazendo mimica com os olhos fechados"
+],
+\end{lstlisting}
+  \item Dentro de cada categoria (ex: \texttt{"filmes"}, \texttt{"objetos"}), adicione palavras simples na lista \texttt{"easy"} e palavras mais específicas na lista \texttt{"normal"}.
+  \item \textbf{Atenção:} Lembre-se sempre de colocar uma vírgula (\texttt{,}) após cada linha, exceto na última palavra de cada lista.
+\end{enumerate}
+
+\subsection{2. Como Alterar o Tempo do Cronômetro (5s e 70s)}
+Caso queira deixar a partida mais rápida (ex: 60 segundos) ou mais longa (ex: 90 segundos):
+\begin{enumerate}
+  \item Abra o arquivo \texttt{lib/features/mimica/presentation/state/game\_notifier.dart}.
+  \item Localize as constantes no início da classe \texttt{GameNotifier}:
+\begin{lstlisting}
+static const int preparationDurationSeconds = 5; // Tempo de preparacao
+static const int actionDurationSeconds = 70;     // Tempo principal de mimica
+\end{lstlisting}
+  \item Altere o valor \texttt{70} para a quantidade de segundos desejada e salve o arquivo.
+\end{enumerate}
+
+\subsection{3. Como Alterar os Pontos de Cada Nível de Risco}
+Para mudar quantos pontos uma equipe ganha ou perde em cada dificuldade:
+\begin{enumerate}
+  \item Abra o arquivo \texttt{lib/features/mimica/domain/entities/game\_enums.dart}.
+  \item Localize o bloco \texttt{enum RiskLevel}:
+\begin{lstlisting}
+bonus(
+  label: 'Bônus',
+  description: 'Palavra normal + Penalidade física (Erro: -2 pts)',
+  pointsOnSuccess: 4,
+  pointsOnFailure: -2,
+);
+\end{lstlisting}
+  \item Altere \texttt{pointsOnSuccess} (pontos ao acertar) ou \texttt{pointsOnFailure} (pontos ao errar). Todo o cálculo do jogo e os textos dos botões se ajustarão automaticamente.
+\end{enumerate}
+
+\subsection{4. Como Mudar as Cores do Aplicativo}
+\begin{enumerate}
+  \item Abra o arquivo \texttt{lib/core/theme/app\_theme.dart}.
+  \item Altere os códigos hexadecimais (os 6 caracteres após \texttt{0xFF}) nas variáveis principais:
+\begin{lstlisting}
+static const Color backgroundDark = Color(0xFF0F1020); // Cor de fundo
+static const Color surfaceCard    = Color(0xFF1C1E36); // Cor dos cartoes
+static const Color primaryPurple  = Color(0xFF7C4DFF); // Cor principal
+static const Color accentAmber    = Color(0xFFFFB300); // Cor de destaque
+static const Color successGreen   = Color(0xFF00E676); // Cor de acerto
+static const Color dangerRed      = Color(0xFFFF5252); // Cor de erro/alerta
+\end{lstlisting}
+\end{enumerate}
+
+\subsection{5. Como Criar uma Nova Categoria (Ex: ``Músicas'')}
+Se desejar criar uma 12ª categoria no futuro, siga estes 4 passos simples:
+\begin{enumerate}
+  \item Em \texttt{lib/features/mimica/domain/entities/game\_enums.dart}, adicione \texttt{musicas('Músicas'),} dentro de \texttt{enum GameCategory}.
+  \item Em \texttt{assets/data/words\_db.json}, crie o bloco \texttt{"musicas": \{ "easy": [...], "normal": [...] \}}.
+  \item Em \texttt{lib/features/mimica/data/repositories/word\_repository\_impl.dart}, dentro da função \texttt{\_mapCategoryToJsonKey}, adicione a linha:
+  \texttt{GameCategory.musicas => 'musicas',}
+  \item Em \texttt{lib/features/mimica/presentation/pages/category\_selection\_page.dart}, dentro da função \texttt{\_iconForCategory}, associe um ícone:
+  \texttt{GameCategory.musicas => Icons.music\_note\_rounded,}
+\end{enumerate}
+
+% ============================================================================
+% SECAO 6: COMANDOS UTEIS E COMPILACAO DO APK
+% ============================================================================
+\section{Comandos Úteis para Execução e Geração de APK}
+
+Sempre execute os comandos abaixo dentro da pasta do projeto (\texttt{/home/sexta-feira/Documents/Projetos/CursoFlutter/teste}):
+
+\begin{itemize}
+  \item \textbf{Executar em modo de desenvolvimento no Emulador ou Celular via USB:}
+\begin{lstlisting}
+flutter run
+\end{lstlisting}
+
+  \item \textbf{Regerar arquivos automáticos (caso altere \texttt{team\_entity.dart}, \texttt{mimic\_card\_entity.dart} ou \texttt{game\_state.dart}):}
+\begin{lstlisting}
+dart run build_runner build --delete-conflicting-outputs
+\end{lstlisting}
+
+  \item \textbf{Gerar o APK Final de Produção (Ultraleve com R8/ProGuard dividido por arquitetura):}
+\begin{lstlisting}
+flutter build apk --release --split-per-abi
+\end{lstlisting}
+  \textit{O arquivo APK pronto para instalar no celular Android será salvo na pasta:\\
+  \texttt{build/app/outputs/flutter-apk/app-arm64-v8a-release.apk}}
+\end{itemize}
+
+\end{document}
+

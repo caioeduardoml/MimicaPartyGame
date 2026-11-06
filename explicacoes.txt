@@ -1,0 +1,54 @@
+============================================================
+RESUMO DAS MODIFICAÇÕES FEITAS PELA IA
+Data: 2026-11-05 21:14
+============================================================
+
+1. ARQUIVOS MODIFICADOS / CRIADOS
+   - pubspec.yaml (Modificado)
+   - android/build.gradle.kts (Modificado)
+   - android/app/build.gradle.kts (Modificado)
+   - android/app/proguard-rules.pro (Criado)
+   - assets/data/words_db.json (Criado)
+   - lib/main.dart (Modificado)
+   - lib/core/theme/app_theme.dart (Criado)
+   - lib/core/services/feedback_service.dart (Criado)
+   - lib/features/mimica/domain/entities/game_enums.dart (Criado)
+   - lib/features/mimica/domain/entities/team_entity.dart (Criado)
+   - lib/features/mimica/domain/entities/mimic_card_entity.dart (Criado)
+   - lib/features/mimica/domain/repositories/word_repository.dart (Criado)
+   - lib/features/mimica/data/models/words_database_model.dart (Criado)
+   - lib/features/mimica/data/datasources/local_word_datasource.dart (Criado)
+   - lib/features/mimica/data/repositories/word_repository_impl.dart (Criado)
+   - lib/features/mimica/presentation/state/game_state.dart (Criado)
+   - lib/features/mimica/presentation/state/game_notifier.dart (Criado)
+   - lib/features/mimica/presentation/pages/game_flow_shell_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/home_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/setup_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/scoreboard_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/category_selection_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/risk_selection_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/action_page.dart (Criado)
+   - lib/features/mimica/presentation/pages/victory_page.dart (Criado)
+   - README.md (Modificado - Documentacao completa e intuitiva)
+
+2. DETALHAMENTO DAS MUDANÇAS
+   - [Configuracao Android & Build]:
+     * O que foi alterado: Limpeza de pastas desnecessarias, ativacao do R8/ProGuard e ajuste de compileSdk 36 para todos os subprojetos.
+     * Por que foi alterado: Para gerar um APK Android extremamente leve e corrigir incompatibilidade do plugin vibration com AndroidX.
+     * Impacto no comportamento do sistema: Compilacao limpa e APK otimizado.
+
+   - [Camada Domain & Data (Banco JSON)]:
+     * O que foi alterado: Criacao das entidades imutaveis com Freezed e banco local JSON com mais de 360 palavras divididas em 11 categorias e 12 penalidades fisicas.
+     * Por que foi alterado: Para garantir funcionamento 100% offline, rapido e sem peso extra no APK.
+     * Impacto no comportamento do sistema: Sorteio instantaneo de cartas respeitando os 4 niveis de risco (Facil, Normal, Dificil com 2 palavras e Bonus com penalidade fisica).
+
+   - [Camada Presentation (Riverpod + 7 Telas)]:
+     * O que foi alterado: Criacao do motor GameNotifier e das 7 telas do fluxo (Home, Setup, Scoreboard, Categorias, Risco, Acao com Timer 5s/70s e Vitoria Imediata).
+     * Por que foi alterado: Para entregar a experiencia completa do Party Game.
+     * Impacto no comportamento do sistema: Jogo completo e reativo funcionando no Android.
+
+3. COMO TESTAR / VALIDAR
+   - No terminal, dentro da pasta `teste/`, execute: `flutter run`
+   - Teste a criacao de equipes, escolha de pontuacao maxima (20 a 60), sorteio de categorias, contagem regressiva de 5s + 70s e condicao de vitoria imediata.
+============================================================
+
