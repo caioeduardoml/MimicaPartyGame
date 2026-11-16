@@ -7,7 +7,9 @@
 Thumbs.db
 *.swp
 *.bak
-*~
+*~ 
+*.tex
+*.txt
 
 # Arquivos e pastas de IDEs (VS Code, Android Studio, IntelliJ)
 .idea/

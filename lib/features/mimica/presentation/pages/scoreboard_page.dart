@@ -71,7 +71,7 @@ class ScoreboardPage extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 if (currentTeam != null)
-                  _CurrentTurnBanner(teamName: currentTeam.name),
+                  _CurrentTurnBanner(team: currentTeam),
                 const SizedBox(height: 18),
                 Expanded(
                   child: ListView.separated(
@@ -160,21 +160,25 @@ class ScoreboardPage extends ConsumerWidget {
 }
 
 class _CurrentTurnBanner extends StatelessWidget {
-  final String teamName;
+  final TeamEntity team;
 
-  const _CurrentTurnBanner({required this.teamName});
+  const _CurrentTurnBanner({required this.team});
 
   @override
   Widget build(BuildContext context) {
+    final isMandatoryBonus = team.isMandatoryBonusTurn;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
       decoration: BoxDecoration(
-        color: AppTheme.primaryViolet,
+        color: isMandatoryBonus ? AppTheme.dangerRed : AppTheme.primaryViolet,
         borderRadius: BorderRadius.circular(22),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: AppTheme.primaryVioletShadow,
-            offset: Offset(0, 6),
+            color: isMandatoryBonus
+                ? AppTheme.dangerRedShadow
+                : AppTheme.primaryVioletShadow,
+            offset: const Offset(0, 6),
             blurRadius: 0,
           ),
         ],
@@ -182,16 +186,19 @@ class _CurrentTurnBanner extends StatelessWidget {
       child: Column(
         children: [
           Text(
-            'PREPARE-SE! É A VEZ DA EQUIPE:',
+            isMandatoryBonus
+                ? 'RODADA DE DESAFIO BÔNUS OBRIGATÓRIO!'
+                : 'PREPARE-SE! É A VEZ DA EQUIPE:',
+            textAlign: TextAlign.center,
             style: AppTheme.bodyFont(
               fontSize: 13,
               fontWeight: FontWeight.w800,
-              color: Colors.white.withValues(alpha: 0.9),
+              color: Colors.white.withValues(alpha: 0.95),
             ),
           ),
           const SizedBox(height: 4),
           Text(
-            teamName.toUpperCase(),
+            team.name.toUpperCase(),
             textAlign: TextAlign.center,
             style: AppTheme.displayFont(
               fontSize: 30,
@@ -203,6 +210,25 @@ class _CurrentTurnBanner extends StatelessWidget {
                   blurRadius: 0,
                 ),
               ],
+            ),
+          ),
+          const SizedBox(height: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 5),
+            decoration: BoxDecoration(
+              color: Colors.black26,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              isMandatoryBonus
+                  ? 'JOGADOR ${team.currentPlayerNumber} DE ${team.playersCount} VAI ENCARAR O BÔNUS COM PUNIÇÃO!'
+                  : 'MÍMICA DA VEZ: JOGADOR ${team.currentPlayerNumber} DE ${team.playersCount}',
+              textAlign: TextAlign.center,
+              style: AppTheme.bodyFont(
+                fontSize: 12,
+                fontWeight: FontWeight.w800,
+                color: Colors.white,
+              ),
             ),
           ),
         ],
@@ -285,10 +311,23 @@ class _ThermometerScoreCard extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${team.playersCount} jogadores',
+                      '${team.playersCount} jogadores • Vez: Jogador ${team.currentPlayerNumber}',
                       style: AppTheme.bodyFont(
                         fontSize: 13,
                         color: Colors.white70,
+                      ),
+                    ),
+                    const SizedBox(height: 3),
+                    Text(
+                      team.isMandatoryBonusTurn
+                          ? 'DESAFIO BÔNUS OBRIGATÓRIO NESTE TURNO!'
+                          : 'Bônus obrigatório em ${team.turnsUntilMandatoryBonus} ${team.turnsUntilMandatoryBonus == 1 ? "turno" : "turnos"}',
+                      style: AppTheme.bodyFont(
+                        fontSize: 12,
+                        fontWeight: FontWeight.w800,
+                        color: team.isMandatoryBonusTurn
+                            ? AppTheme.dangerRed
+                            : AppTheme.infoCyan,
                       ),
                     ),
                   ],

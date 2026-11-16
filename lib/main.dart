@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'core/theme/app_theme.dart';
-import 'features/mimica/presentation/pages/game_flow_shell_page.dart';
+import 'features/hub/presentation/pages/party_game_hub_page.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -29,7 +29,7 @@ class MimicaPartyApp extends StatelessWidget {
       title: 'Mimica party',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
-      home: const GameFlowShellPage(),
+      home: const PartyGameHubPage(),
     );
   }
 }

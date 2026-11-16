@@ -12,6 +12,13 @@ _$TeamEntityImpl _$$TeamEntityImplFromJson(Map<String, dynamic> json) =>
       name: json['name'] as String,
       playersCount: (json['playersCount'] as num?)?.toInt() ?? 2,
       score: (json['score'] as num?)?.toInt() ?? 0,
+      turnsPlayed: (json['turnsPlayed'] as num?)?.toInt() ?? 0,
+      nextMandatoryBonusTurn:
+          (json['nextMandatoryBonusTurn'] as num?)?.toInt() ?? 2,
+      pendingBonusPlayers: (json['pendingBonusPlayers'] as List<dynamic>?)
+              ?.map((e) => (e as num).toInt())
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$TeamEntityImplToJson(_$TeamEntityImpl instance) =>
@@ -20,5 +27,7 @@ Map<String, dynamic> _$$TeamEntityImplToJson(_$TeamEntityImpl instance) =>
       'name': instance.name,
       'playersCount': instance.playersCount,
       'score': instance.score,
+      'turnsPlayed': instance.turnsPlayed,
+      'nextMandatoryBonusTurn': instance.nextMandatoryBonusTurn,
+      'pendingBonusPlayers': instance.pendingBonusPlayers,
     };
-

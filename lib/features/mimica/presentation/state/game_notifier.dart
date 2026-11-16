@@ -47,9 +47,29 @@ class GameNotifier extends Notifier<GameState> {
   static const int categoriesToDrawCount = 4;
   static const int preparationDurationSeconds = 5;
   static const int actionDurationSeconds = 70;
+  static const int maxTeamNameLength = 20;
+
+  static final RegExp _unsafeControlCharsRegex = RegExp(
+    r'[\x00-\x1F\x7F\u200B-\u200F\u202A-\u202E]',
+  );
 
   Timer? _timer;
-  final Random _random = Random();
+  final Random _random = _createSecureRandom();
+
+  static Random _createSecureRandom() {
+    try {
+      return Random.secure();
+    } catch (_) {
+      return Random();
+    }
+  }
+
+  /// Sanitiza nomes de equipes removendo caracteres de controle/RTLO e aplicando limite de 20 caracteres.
+  static String sanitizeTeamName(String raw) {
+    final cleaned = raw.replaceAll(_unsafeControlCharsRegex, '').trim();
+    if (cleaned.length <= maxTeamNameLength) return cleaned;
+    return cleaned.substring(0, maxTeamNameLength).trim();
+  }
 
   @override
   GameState build() {
@@ -121,7 +141,7 @@ class GameNotifier extends Notifier<GameState> {
       return;
     }
 
-    final trimmedName = name.trim();
+    final trimmedName = sanitizeTeamName(name);
     final effectiveName =
         trimmedName.isEmpty ? 'Equipe ${state.teams.length + 1}' : trimmedName;
     final clampedPlayers =
@@ -147,7 +167,7 @@ class GameNotifier extends Notifier<GameState> {
   }) {
     final updatedTeams = state.teams.map((team) {
       if (team.id != teamId) return team;
-      final newName = name != null ? name.trim() : team.name;
+      final newName = name != null ? sanitizeTeamName(name) : team.name;
       final newPlayers = playersCount != null
           ? playersCount.clamp(minPlayersPerTeam, maxPlayersPerTeam)
           : team.playersCount;
@@ -187,7 +207,7 @@ class GameNotifier extends Notifier<GameState> {
     await ref.read(wordRepositoryProvider).initialize();
 
     final resetTeams =
-        state.teams.map((team) => team.copyWith(score: 0)).toList();
+        state.teams.map(_initializeTeamBonusSchedule).toList();
 
     state = state.copyWith(
       teams: resetTeams,
@@ -200,6 +220,75 @@ class GameNotifier extends Notifier<GameState> {
       currentCard: null,
       phase: GamePhase.scoreboard,
       errorMessage: null,
+    );
+  }
+
+  /// Inicializa ou reseta o agendamento de Bonus Obrigatorio para uma equipe,
+  /// criando uma fila embaralhada com todos os integrantes (1..playersCount)
+  /// para garantir que todos os membros da mesma equipe caiam no Bonus Obrigatorio.
+  TeamEntity _initializeTeamBonusSchedule(TeamEntity team) {
+    final queue = List<int>.generate(team.playersCount, (i) => i + 1)
+      ..shuffle(_random);
+
+    final firstTargetPlayer = queue.removeAt(0);
+    // Garante pelo menos 1 turno normal antes do primeiro Bonus Obrigatorio da equipe
+    var firstBonusTurn = (firstTargetPlayer - 1) % team.playersCount;
+    if (firstBonusTurn < 1) {
+      firstBonusTurn += team.playersCount;
+    }
+
+    return team.copyWith(
+      score: 0,
+      turnsPlayed: 0,
+      nextMandatoryBonusTurn: firstBonusTurn,
+      pendingBonusPlayers: queue,
+    );
+  }
+
+  /// Calcula o proximo turno de Bonus Obrigatorio da equipe apos concluir um turno,
+  /// escolhendo o proximo integrante da fila embaralhada para que nenhum colega
+  /// escape ou repita antes de todos da equipe passarem pelo desafio.
+  TeamEntity _advanceTeamTurnAndScheduleBonus({
+    required TeamEntity team,
+    required int updatedScore,
+    required bool wasMandatoryBonusTurn,
+  }) {
+    final nextTurnsPlayed = team.turnsPlayed + 1;
+
+    if (!wasMandatoryBonusTurn) {
+      return team.copyWith(
+        score: updatedScore,
+        turnsPlayed: nextTurnsPlayed,
+      );
+    }
+
+    // Recarrega a fila com todos os integrantes se o ciclo da equipe tiver acabado
+    final updatedQueue = List<int>.from(team.pendingBonusPlayers);
+    if (updatedQueue.isEmpty) {
+      updatedQueue.addAll(
+        List<int>.generate(team.playersCount, (i) => i + 1)..shuffle(_random),
+      );
+    }
+
+    final nextTargetPlayer = updatedQueue.removeAt(0);
+    final nextPlayerIndexZeroBased = nextTargetPlayer - 1;
+    final currentMod = nextTurnsPlayed % team.playersCount;
+
+    // Quantos turnos da equipe faltam ate chegar na vez do integrante sorteado
+    var deltaTurns =
+        (nextPlayerIndexZeroBased - currentMod + team.playersCount) %
+            team.playersCount;
+
+    // Garante pelo menos 2 turnos de respiro da equipe entre dois Bonus Obrigatorios
+    while (deltaTurns < 2) {
+      deltaTurns += team.playersCount;
+    }
+
+    return team.copyWith(
+      score: updatedScore,
+      turnsPlayed: nextTurnsPlayed,
+      nextMandatoryBonusTurn: nextTurnsPlayed + deltaTurns,
+      pendingBonusPlayers: updatedQueue,
     );
   }
 
@@ -242,12 +331,16 @@ class GameNotifier extends Notifier<GameState> {
     final category = state.selectedCategory;
     if (category == null) return;
 
+    // Se o turno atual for de Desafio Bonus Obrigatorio, trava no nivel Bonus
+    final effectiveRisk =
+        state.isMandatoryBonusTurn ? RiskLevel.bonus : riskLevel;
+
     _cancelTimer();
 
     final repository = ref.read(wordRepositoryProvider);
     final card = await repository.drawCard(
       category: category,
-      riskLevel: riskLevel,
+      riskLevel: effectiveRisk,
       usedCardIds: state.usedCardIds,
     );
 
@@ -258,7 +351,7 @@ class GameNotifier extends Notifier<GameState> {
     };
 
     state = state.copyWith(
-      selectedRisk: riskLevel,
+      selectedRisk: effectiveRisk,
       currentCard: card,
       usedCardIds: updatedUsedIds,
       remainingSeconds: preparationDurationSeconds,
@@ -375,7 +468,11 @@ class GameNotifier extends Notifier<GameState> {
 
     // Impede que a pontuacao fique negativa caso erre no Bonus com 0 ou 1 ponto
     final updatedScore = max(0, activeTeam.score + pointDelta);
-    final updatedTeam = activeTeam.copyWith(score: updatedScore);
+    final updatedTeam = _advanceTeamTurnAndScheduleBonus(
+      team: activeTeam,
+      updatedScore: updatedScore,
+      wasMandatoryBonusTurn: activeTeam.isMandatoryBonusTurn,
+    );
 
     final updatedTeams = List<TeamEntity>.from(state.teams);
     updatedTeams[state.currentTeamIndex] = updatedTeam;
@@ -419,7 +516,7 @@ class GameNotifier extends Notifier<GameState> {
     _cancelTimer();
 
     final resetTeams =
-        state.teams.map((team) => team.copyWith(score: 0)).toList();
+        state.teams.map(_initializeTeamBonusSchedule).toList();
 
     state = state.copyWith(
       teams: resetTeams,

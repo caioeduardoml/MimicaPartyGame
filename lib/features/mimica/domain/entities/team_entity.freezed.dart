@@ -24,6 +24,9 @@ mixin _$TeamEntity {
   String get name => throw _privateConstructorUsedError;
   int get playersCount => throw _privateConstructorUsedError;
   int get score => throw _privateConstructorUsedError;
+  int get turnsPlayed => throw _privateConstructorUsedError;
+  int get nextMandatoryBonusTurn => throw _privateConstructorUsedError;
+  List<int> get pendingBonusPlayers => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -37,7 +40,14 @@ abstract class $TeamEntityCopyWith<$Res> {
           TeamEntity value, $Res Function(TeamEntity) then) =
       _$TeamEntityCopyWithImpl<$Res, TeamEntity>;
   @useResult
-  $Res call({String id, String name, int playersCount, int score});
+  $Res call(
+      {String id,
+      String name,
+      int playersCount,
+      int score,
+      int turnsPlayed,
+      int nextMandatoryBonusTurn,
+      List<int> pendingBonusPlayers});
 }
 
 /// @nodoc
@@ -57,6 +67,9 @@ class _$TeamEntityCopyWithImpl<$Res, $Val extends TeamEntity>
     Object? name = null,
     Object? playersCount = null,
     Object? score = null,
+    Object? turnsPlayed = null,
+    Object? nextMandatoryBonusTurn = null,
+    Object? pendingBonusPlayers = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -75,6 +88,18 @@ class _$TeamEntityCopyWithImpl<$Res, $Val extends TeamEntity>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
+      turnsPlayed: null == turnsPlayed
+          ? _value.turnsPlayed
+          : turnsPlayed // ignore: cast_nullable_to_non_nullable
+              as int,
+      nextMandatoryBonusTurn: null == nextMandatoryBonusTurn
+          ? _value.nextMandatoryBonusTurn
+          : nextMandatoryBonusTurn // ignore: cast_nullable_to_non_nullable
+              as int,
+      pendingBonusPlayers: null == pendingBonusPlayers
+          ? _value.pendingBonusPlayers
+          : pendingBonusPlayers // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -87,7 +112,14 @@ abstract class _$$TeamEntityImplCopyWith<$Res>
       __$$TeamEntityImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String id, String name, int playersCount, int score});
+  $Res call(
+      {String id,
+      String name,
+      int playersCount,
+      int score,
+      int turnsPlayed,
+      int nextMandatoryBonusTurn,
+      List<int> pendingBonusPlayers});
 }
 
 /// @nodoc
@@ -105,6 +137,9 @@ class __$$TeamEntityImplCopyWithImpl<$Res>
     Object? name = null,
     Object? playersCount = null,
     Object? score = null,
+    Object? turnsPlayed = null,
+    Object? nextMandatoryBonusTurn = null,
+    Object? pendingBonusPlayers = null,
   }) {
     return _then(_$TeamEntityImpl(
       id: null == id
@@ -123,6 +158,18 @@ class __$$TeamEntityImplCopyWithImpl<$Res>
           ? _value.score
           : score // ignore: cast_nullable_to_non_nullable
               as int,
+      turnsPlayed: null == turnsPlayed
+          ? _value.turnsPlayed
+          : turnsPlayed // ignore: cast_nullable_to_non_nullable
+              as int,
+      nextMandatoryBonusTurn: null == nextMandatoryBonusTurn
+          ? _value.nextMandatoryBonusTurn
+          : nextMandatoryBonusTurn // ignore: cast_nullable_to_non_nullable
+              as int,
+      pendingBonusPlayers: null == pendingBonusPlayers
+          ? _value._pendingBonusPlayers
+          : pendingBonusPlayers // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -134,8 +181,12 @@ class _$TeamEntityImpl extends _TeamEntity {
       {required this.id,
       required this.name,
       this.playersCount = 2,
-      this.score = 0})
-      : super._();
+      this.score = 0,
+      this.turnsPlayed = 0,
+      this.nextMandatoryBonusTurn = 2,
+      final List<int> pendingBonusPlayers = const []})
+      : _pendingBonusPlayers = pendingBonusPlayers,
+        super._();
 
   factory _$TeamEntityImpl.fromJson(Map<String, dynamic> json) =>
       _$$TeamEntityImplFromJson(json);
@@ -150,10 +201,25 @@ class _$TeamEntityImpl extends _TeamEntity {
   @override
   @JsonKey()
   final int score;
+  @override
+  @JsonKey()
+  final int turnsPlayed;
+  @override
+  @JsonKey()
+  final int nextMandatoryBonusTurn;
+  final List<int> _pendingBonusPlayers;
+  @override
+  @JsonKey()
+  List<int> get pendingBonusPlayers {
+    if (_pendingBonusPlayers is EqualUnmodifiableListView)
+      return _pendingBonusPlayers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_pendingBonusPlayers);
+  }
 
   @override
   String toString() {
-    return 'TeamEntity(id: $id, name: $name, playersCount: $playersCount, score: $score)';
+    return 'TeamEntity(id: $id, name: $name, playersCount: $playersCount, score: $score, turnsPlayed: $turnsPlayed, nextMandatoryBonusTurn: $nextMandatoryBonusTurn, pendingBonusPlayers: $pendingBonusPlayers)';
   }
 
   @override
@@ -165,12 +231,26 @@ class _$TeamEntityImpl extends _TeamEntity {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.playersCount, playersCount) ||
                 other.playersCount == playersCount) &&
-            (identical(other.score, score) || other.score == score));
+            (identical(other.score, score) || other.score == score) &&
+            (identical(other.turnsPlayed, turnsPlayed) ||
+                other.turnsPlayed == turnsPlayed) &&
+            (identical(other.nextMandatoryBonusTurn, nextMandatoryBonusTurn) ||
+                other.nextMandatoryBonusTurn == nextMandatoryBonusTurn) &&
+            const DeepCollectionEquality()
+                .equals(other._pendingBonusPlayers, _pendingBonusPlayers));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, name, playersCount, score);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      name,
+      playersCount,
+      score,
+      turnsPlayed,
+      nextMandatoryBonusTurn,
+      const DeepCollectionEquality().hash(_pendingBonusPlayers));
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -191,7 +271,10 @@ abstract class _TeamEntity extends TeamEntity {
       {required final String id,
       required final String name,
       final int playersCount,
-      final int score}) = _$TeamEntityImpl;
+      final int score,
+      final int turnsPlayed,
+      final int nextMandatoryBonusTurn,
+      final List<int> pendingBonusPlayers}) = _$TeamEntityImpl;
   const _TeamEntity._() : super._();
 
   factory _TeamEntity.fromJson(Map<String, dynamic> json) =
@@ -206,8 +289,13 @@ abstract class _TeamEntity extends TeamEntity {
   @override
   int get score;
   @override
+  int get turnsPlayed;
+  @override
+  int get nextMandatoryBonusTurn;
+  @override
+  List<int> get pendingBonusPlayers;
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$TeamEntityImplCopyWith<_$TeamEntityImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
-

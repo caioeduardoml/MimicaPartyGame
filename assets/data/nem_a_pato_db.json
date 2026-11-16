@@ -1,0 +1,197 @@
+{
+  "questions": [
+    {
+      "id": "nap_01",
+      "theme": "Espaço & Astronomia",
+      "questionText": "Qual é a distância média aproximada, em quilômetros, entre a Terra e a Lua?",
+      "correctAnswer": 384400,
+      "formattedAnswer": "384,4 mil km",
+      "curiosityNote": "Cabem todos os outros planetas do Sistema Solar enfileirados nesse espaço!"
+    },
+    {
+      "id": "nap_02",
+      "theme": "Corpo Humano",
+      "questionText": "Quantas vezes, em média, o coração de um adulto bate ao longo de 1 ano inteiro?",
+      "correctAnswer": 35000000,
+      "formattedAnswer": "35 milhões de vezes",
+      "curiosityNote": "São cerca de 100 mil batimentos todos os dias."
+    },
+    {
+      "id": "nap_03",
+      "theme": "Cinema & Cultura Pop",
+      "questionText": "Qual foi a bilheteria mundial aproximada (em dólares) do primeiro filme Avatar (2009)?",
+      "correctAnswer": 2923000000,
+      "formattedAnswer": "2,92 bilhões de dólares",
+      "curiosityNote": "Continua no topo como o filme de maior arrecadação da história."
+    },
+    {
+      "id": "nap_04",
+      "theme": "Geografia & Brasil",
+      "questionText": "Quantos municípios oficiais existem hoje no Brasil segundo o IBGE?",
+      "correctAnswer": 5570,
+      "formattedAnswer": "5.570 municípios",
+      "curiosityNote": "Minas Gerais é o estado com mais cidades: são 853 municípios!"
+    },
+    {
+      "id": "nap_05",
+      "theme": "Natureza & Animais",
+      "questionText": "Quantas formigas, aproximadamente, estima-se que existam vivas no planeta Terra agora?",
+      "correctAnswer": 20000000000000000,
+      "formattedAnswer": "20 mil trilhões (20 quadrilhões)",
+      "curiosityNote": "Isso equivale a cerca de 2,5 milhões de formigas para cada ser humano!"
+    },
+    {
+      "id": "nap_06",
+      "theme": "História & Arquitetura",
+      "questionText": "Quantos blocos de pedra calcária foram usados aproximadamente para construir a Grande Pirâmide de Gizé?",
+      "correctAnswer": 2300000,
+      "formattedAnswer": "2,3 milhões de blocos",
+      "curiosityNote": "Cada bloco pesa em média entre 2,5 e 15 toneladas."
+    },
+    {
+      "id": "nap_07",
+      "theme": "Tecnologia & Internet",
+      "questionText": "Quantas pesquisas são feitas no Google em todo o mundo a cada 1 dia (24 horas)?",
+      "correctAnswer": 8500000000,
+      "formattedAnswer": "8,5 bilhões de buscas",
+      "curiosityNote": "São quase 100 mil pesquisas por segundo!"
+    },
+    {
+      "id": "nap_08",
+      "theme": "Comida & Curiosidades",
+      "questionText": "Quantas fatias de pizza são consumidas no estado de São Paulo todos os dias?",
+      "correctAnswer": 8000000,
+      "formattedAnswer": "8 milhões de fatias",
+      "curiosityNote": "São cerca de 1 milhão de pizzas inteiras devoradas diariamente em SP."
+    },
+    {
+      "id": "nap_09",
+      "theme": "Esportes & Futebol",
+      "questionText": "Qual foi o público total pagante e presente na final da Copa de 1950 no Maracanã (Brasil x Uruguai)?",
+      "correctAnswer": 199854,
+      "formattedAnswer": "199,8 mil pessoas",
+      "curiosityNote": "O maior público da história de uma partida de futebol no mundo."
+    },
+    {
+      "id": "nap_10",
+      "theme": "Corpo Humano",
+      "questionText": "Quantos fios de cabelo uma pessoa adulta tem, em média, no couro cabeludo?",
+      "correctAnswer": 100000,
+      "formattedAnswer": "100 mil fios",
+      "curiosityNote": "Perdemos naturalmente entre 50 e 100 fios por dia."
+    },
+    {
+      "id": "nap_11",
+      "theme": "Economia & Fortunas",
+      "questionText": "Se você ganhasse 1.000 reais por dia sem gastar nada, quantos anos levaria para juntar 1 Bilhão de reais?",
+      "correctAnswer": 2739,
+      "formattedAnswer": "2.739 anos",
+      "curiosityNote": "Você precisaria ter começado a guardar dinheiro antes da fundação de Roma!"
+    },
+    {
+      "id": "nap_12",
+      "theme": "Mundo & Viagens",
+      "questionText": "Quantos voos comerciais decolam todos os dias ao redor do mundo?",
+      "correctAnswer": 100000,
+      "formattedAnswer": "100 mil voos",
+      "curiosityNote": "Em qualquer segundo do dia, há cerca de 10 mil aviões no ar simultaneamente."
+    },
+    {
+      "id": "nap_13",
+      "theme": "Ciência & Universo",
+      "questionText": "Qual é a velocidade da luz no vácuo em quilômetros por segundo (km/s)?",
+      "correctAnswer": 300000,
+      "formattedAnswer": "300 mil km/s",
+      "curiosityNote": "Em 1 segundo, a luz consegue dar 7 voltas e meia ao redor da Terra."
+    },
+    {
+      "id": "nap_14",
+      "theme": "Música & Streaming",
+      "questionText": "Quantas reproduções (streams) tem a música 'Blinding Lights' do The Weeknd no Spotify?",
+      "correctAnswer": 4500000000,
+      "formattedAnswer": "4,5 bilhões de plays",
+      "curiosityNote": "A primeira música da história a ultrapassar 4 bilhões de streams na plataforma."
+    },
+    {
+      "id": "nap_15",
+      "theme": "Jogos & Games",
+      "questionText": "Quantas cópias o jogo Minecraft já vendeu mundialmente em todas as plataformas?",
+      "correctAnswer": 300000000,
+      "formattedAnswer": "300 milhões de cópias",
+      "curiosityNote": "É o videogame mais vendido de todos os tempos, superando GTA V e Tetris."
+    },
+    {
+      "id": "nap_16",
+      "theme": "Geografia & Oceanos",
+      "questionText": "Qual é a profundidade máxima conhecida do oceano (Fossa das Marianas) em metros?",
+      "correctAnswer": 10984,
+      "formattedAnswer": "10.984 metros (quase 11 mil m)",
+      "curiosityNote": "Se colocássemos o Monte Everest lá no fundo, ainda sobrariam mais de 2 km de água acima dele!"
+    },
+    {
+      "id": "nap_17",
+      "theme": "Brasil & Demografia",
+      "questionText": "Qual é a população total do Brasil segundo o Censo mais recente do IBGE?",
+      "correctAnswer": 203000000,
+      "formattedAnswer": "203 milhões de habitantes",
+      "curiosityNote": "O Brasil é o 7º país mais populoso do planeta."
+    },
+    {
+      "id": "nap_18",
+      "theme": "Curiosidades Gerais",
+      "questionText": "Quantos segundos existem em 1 ano comum de 365 dias?",
+      "correctAnswer": 31536000,
+      "formattedAnswer": "31,53 milhões de segundos",
+      "curiosityNote": "Enquanto isso, 1 milhão de segundos equivale a apenas 11 dias e meio!"
+    },
+    {
+      "id": "nap_19",
+      "theme": "Natureza & Árvores",
+      "questionText": "Quantas árvores estima-se que existam hoje em todo o planeta Terra?",
+      "correctAnswer": 3000000000000,
+      "formattedAnswer": "3 trilhões de árvores",
+      "curiosityNote": "Existem cerca de 370 árvores para cada habitante do planeta."
+    },
+    {
+      "id": "nap_20",
+      "theme": "Anatomia & Biologia",
+      "questionText": "Quantos ossos tem um bebê humano recém-nascido antes de alguns se fundirem?",
+      "correctAnswer": 300,
+      "formattedAnswer": "300 ossos",
+      "curiosityNote": "Na fase adulta, vários ossos se fundem e ficamos com 206 ossos."
+    },
+    {
+      "id": "nap_21",
+      "theme": "Redes Sociais",
+      "questionText": "Quantos milhões de seguidores Cristiano Ronaldo possui atualmente no Instagram?",
+      "correctAnswer": 640000000,
+      "formattedAnswer": "640 milhões de seguidores",
+      "curiosityNote": "A pessoa mais seguida do planeta nas redes sociais."
+    },
+    {
+      "id": "nap_22",
+      "theme": "Engenharia & Transportes",
+      "questionText": "Quantas peças individuais, aproximadamente, compõem um avião Boeing 747?",
+      "correctAnswer": 6000000,
+      "formattedAnswer": "6 milhões de peças",
+      "curiosityNote": "Além disso, ele possui mais de 270 km de fiação elétrica interna!"
+    },
+    {
+      "id": "nap_23",
+      "theme": "Curiosidades do Dia a Dia",
+      "questionText": "Quantas vezes, em média, uma pessoa pisca os olhos ao longo de 1 dia acordada?",
+      "correctAnswer": 15000,
+      "formattedAnswer": "15 mil vezes",
+      "curiosityNote": "Isso significa que passamos cerca de 10% do tempo acordados de olhos fechados!"
+    },
+    {
+      "id": "nap_24",
+      "theme": "História & Brasil",
+      "questionText": "Quantos quilômetros de extensão tem a costa litorânea do Brasil banhada pelo Oceano Atlântico?",
+      "correctAnswer": 7491,
+      "formattedAnswer": "7.491 km",
+      "curiosityNote": "Se contarmos todas as reentrâncias de baías e ilhas, passa de 9.000 km."
+    }
+  ]
+}
+

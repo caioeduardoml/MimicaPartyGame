@@ -31,14 +31,37 @@ class CategorySelectionPage extends ConsumerWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                'Vez de ${currentTeam?.name ?? "Equipe"}',
+                'Vez de ${currentTeam?.name ?? "Equipe"} (Jogador ${currentTeam?.currentPlayerNumber ?? 1} de ${currentTeam?.playersCount ?? 2})',
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 20,
+                  fontSize: 19,
                   fontWeight: FontWeight.bold,
                   color: AppTheme.accentAmber,
                 ),
               ),
+              if (currentTeam?.isMandatoryBonusTurn == true) ...[
+                const SizedBox(height: 10),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 14,
+                    vertical: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: AppTheme.dangerRed.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(14),
+                    border: Border.all(color: AppTheme.dangerRed, width: 1.5),
+                  ),
+                  child: const Text(
+                    'RODADA DE DESAFIO BÔNUS OBRIGATÓRIO! Escolha a categoria para encarar a mímica com punição.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w800,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
               const SizedBox(height: 6),
               const Text(
                 'Foram sorteadas 4 opções. Escolha 1 categoria para a mímica:',

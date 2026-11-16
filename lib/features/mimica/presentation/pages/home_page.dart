@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/theme/app_theme.dart';
+import '../../../hub/presentation/state/hub_navigation_notifier.dart';
 import '../state/game_notifier.dart';
 import '../widgets/game_button.dart';
 
@@ -76,7 +77,20 @@ class _HomePageState extends ConsumerState<HomePage>
                   fontSize: 18,
                   onPressed: () => _showRulesDialog(context),
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 14),
+                GameButton(
+                  label: 'TROCAR DE JOGO (HUB)',
+                  icon: Icons.swap_horiz_rounded,
+                  buttonStyle: GameButtonStyle.neutral,
+                  height: 52,
+                  fontSize: 16,
+                  onPressed: () {
+                    ref
+                        .read(hubSelectedGameProvider.notifier)
+                        .returnToHubMenu();
+                  },
+                ),
+                const SizedBox(height: 12),
               ],
             ),
           ),

@@ -78,6 +78,9 @@ class GameState with _$GameState {
     return teams[currentTeamIndex];
   }
 
+  /// Indica se o turno atual da equipe da vez e um Desafio Bonus Obrigatorio.
+  bool get isMandatoryBonusTurn => currentTeam?.isMandatoryBonusTurn ?? false;
+
   /// Valida se a configuracao da partida atende a todos os requisitos de negocio:
   /// - Entre 2 e 6 equipes.
   /// - Cada equipe com 2 a 6 jogadores e nome preenchido.
